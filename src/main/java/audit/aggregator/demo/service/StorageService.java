@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 import java.util.Map;
 
@@ -16,10 +16,8 @@ public class StorageService {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    public ResponseEntity<String> uploadAuditTrailFile(final MultipartFile file) {
+    public ResponseEntity<String> uploadAuditTrailFileToMongo(final byte[] json) {
         try {
-            // Read file content as string
-            String json = new String(file.getBytes());
 
             // Parse JSON array into List of Maps
             ObjectMapper objectMapper = new ObjectMapper();
@@ -27,7 +25,7 @@ public class StorageService {
                     objectMapper.readValue(json, new TypeReference<List<Map<String, Object>>>() {});
 
             // Save all documents into "audit-trail-collection-2"
-            mongoTemplate.insert(auditLogs, "audit-trail-collection-2");
+            mongoTemplate.insert(auditLogs, "audit-trail-collection-3");
             return ResponseEntity.ok("File uploaded and data stored successfully. Count: " + auditLogs.size());
         } catch (Exception e) {
             e.printStackTrace();

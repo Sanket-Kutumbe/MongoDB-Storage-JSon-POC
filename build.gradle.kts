@@ -31,7 +31,10 @@ dependencies {
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+	implementation("software.amazon.awssdk:s3:2.20.143") // latest stable v2
+	implementation("org.springframework.boot:spring-boot-starter")
+	implementation("software.amazon.awssdk:core:2.20.143")
+	implementation("software.amazon.awssdk:auth:2.20.143")
 }
 
 tasks.withType<Test> {
